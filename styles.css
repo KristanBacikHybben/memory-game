@@ -1,0 +1,35 @@
+.button {
+    font-size: 5rem;
+    width: 5rem;
+    height: 8rem;
+    color: white;
+}
+
+.button:hover {
+    background-color: white;
+    color: none;
+}
+
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(5, 70px);
+    grid-gap: 30px;
+    text-align: center;
+    position: center;
+    margin: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.resetBtn {
+    margin: 10px;
+    font-size: 3rem;
+    background-color: brown;
+    cursor: pointer;
+}
+
+#resetBoard {
+    text-align: center;
+}
+

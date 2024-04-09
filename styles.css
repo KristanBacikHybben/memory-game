@@ -5,7 +5,7 @@
     color: white;
 }
 
-.button:hover {
+.button {
     background-color: white;
     color: none;
 }

@@ -2,8 +2,7 @@ const choice = document.querySelectorAll(".button");
 const board = document.getElementById("board");
 
 let highlightedButton = [];
-let correct = false;
-const correctChoices = 0;
+let correctChoices = [];
 
 function select () {
     choice.forEach(button => {
@@ -13,12 +12,14 @@ function select () {
             if (highlightedButton.length < 2) {
                 highlightedChoice.style.border = "4px solid black";
                 highlightedChoice.style.color = "black";
+                highlightedChoice.disabled = true;
                 highlightedButton.push(highlightedChoice);
                 if (highlightedButton.length === 2) {
                     selected();
                 }
             } else {
                 highlightedButton.forEach(button => {
+                    highlightedChoice.disabled = false;
                     button.style.backgroundColor = "";
                     button.style.border = "";
                     button.style.color = "white";
@@ -26,9 +27,10 @@ function select () {
                 
                 
                 highlightedButton = [];
+                button.disabled = true;
             }
             
-            button.disabled = true;
+
     });
 })
 };
@@ -38,64 +40,42 @@ function selected() {
     
 
     if (button1.textContent === button2.textContent) {
-        correct = true;
         highlightedButton.forEach(button => {
             button.style.backgroundColor = "green";
+            if(button.style.backgroundColor = "green") {
+                button.disabled = true;
+                button.style.backgroundColor = "green";
+                button.style.color = "black";
+                correctChoices.push(button)
+            }
         });
-        if (correct) {
-            highlightedButton = [];
-
-        }
+        
     } else {
         highlightedButton.forEach(button => {
             button.style.backgroundColor = "red";
+            if (button.style.backgroundColor = "red") {
+                button.disabled = false;
+            }
         })
     };
     
     setTimeout(() => {
-            highlightedButton.forEach(button => {
+        highlightedButton.forEach(button => {
+            if (button.style.backgroundColor === "red") {
                 button.style.backgroundColor = "";
                 button.style.border = "";
                 button.style.color = "white";
-            });
-            
-            highlightedButton = [];
-            correct = false; 
-        }, 1000);
+            }
+        });
 
-        highlightedButton.forEach(button => {
-            if(button.style.backgroundColor === "green") {
-                correctChoices++;
-                 if (correctChoices === choice.length) {
-                    alert("YOU HAVE WON!!!");
-                }
-            }}
-            )
-               
-            
-
-        let clicked = null;
-
-        function clicks(button) {
+        highlightedButton = [];
+        if (correctChoices.length === choice.length) {
             choice.forEach(button => {
-            if (button.style.backgroundColor === "green") {
                 button.disabled = true;
-                return;
-            } else if (button.style.backgroundColor === "red") {
-                button.disabled = false;
-            } else {
-                clicked = null;
-            }
-            })
-            }
-        
-        choice.forEach(button => {
-            button.addEventListener("click", clicks(button))
-        })
-        
-    }
-
-
+            });
+        }
+    }, 150);
+}
 const reset = document.getElementById("shuffle");
         
 select();
@@ -103,9 +83,14 @@ select();
 function shuffle() {
     for (let i = board.children.length - 1; i >= 0; i--) {
         board.appendChild(board.children[Math.random() * i | 0]);  
-    } 
+    }
+    choice.forEach(button => {
+        button.disabled = false;
+    })
+    
 
-}    
+}
+
 reset.addEventListener("click", () => {
     choice.forEach(button => {
         button.style.backgroundColor = "";
@@ -114,12 +99,7 @@ reset.addEventListener("click", () => {
         button.disabled = false;
     });
         highlightedButton = [];
-        correct = false;
     });
 
-
-reset.addEventListener("click", () => {
-    shuffle();
-});
 
 shuffle();
